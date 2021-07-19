@@ -9,18 +9,41 @@ part of 'pokeapi_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PokeApiStore on _PokeApiStoreBase, Store {
-  final _$pokeAPIAtom = Atom(name: '_PokeApiStoreBase.pokeAPI');
+  Computed<PokeAPI> _$pokeAPIComputed;
 
   @override
-  PokeAPI get pokeAPI {
-    _$pokeAPIAtom.reportRead();
-    return super.pokeAPI;
+  PokeAPI get pokeAPI =>
+      (_$pokeAPIComputed ??= Computed<PokeAPI>(() => super.pokeAPI,
+              name: '_PokeApiStoreBase.pokeAPI'))
+          .value;
+
+  final _$_pokeAPIAtom = Atom(name: '_PokeApiStoreBase._pokeAPI');
+
+  @override
+  PokeAPI get _pokeAPI {
+    _$_pokeAPIAtom.reportRead();
+    return super._pokeAPI;
   }
 
   @override
-  set pokeAPI(PokeAPI value) {
-    _$pokeAPIAtom.reportWrite(value, super.pokeAPI, () {
-      super.pokeAPI = value;
+  set _pokeAPI(PokeAPI value) {
+    _$_pokeAPIAtom.reportWrite(value, super._pokeAPI, () {
+      super._pokeAPI = value;
+    });
+  }
+
+  final _$pokemonAtom = Atom(name: '_PokeApiStoreBase.pokemon');
+
+  @override
+  Pokemon get pokemon {
+    _$pokemonAtom.reportRead();
+    return super.pokemon;
+  }
+
+  @override
+  set pokemon(Pokemon value) {
+    _$pokemonAtom.reportWrite(value, super.pokemon, () {
+      super.pokemon = value;
     });
   }
 
@@ -39,8 +62,31 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   }
 
   @override
+  Pokemon getPokemon({int index}) {
+    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
+        name: '_PokeApiStoreBase.getPokemon');
+    try {
+      return super.getPokemon(index: index);
+    } finally {
+      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  Widget getImage({String numero}) {
+    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
+        name: '_PokeApiStoreBase.getImage');
+    try {
+      return super.getImage(numero: numero);
+    } finally {
+      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+pokemon: ${pokemon},
 pokeAPI: ${pokeAPI}
     ''';
   }

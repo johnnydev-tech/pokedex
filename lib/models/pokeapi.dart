@@ -1,208 +1,133 @@
-// To parse this JSON data, do
-//
-//     final PokeAPI = PokeAPIFromJson(jsonString);
-
-import 'dart:convert';
-
-PokeAPI pokeAPIFromJson(String str) => PokeAPI.fromJson(json.decode(str));
-
-String pokeAPIToJson(PokeAPI data) => json.encode(data.toJson());
-
 class PokeAPI {
-  PokeAPI({
-    this.pokemon,
-  });
-
   List<Pokemon> pokemon;
 
-  factory PokeAPI.fromJson(Map<String, dynamic> json) => PokeAPI(
-        pokemon:
-            List<Pokemon>.from(json["pokemon"].map((x) => Pokemon.fromJson(x))),
-      );
+  PokeAPI({this.pokemon});
 
-  Map<String, dynamic> toJson() => {
-        "pokemon": List<dynamic>.from(pokemon.map((x) => x.toJson())),
-      };
+  PokeAPI.fromJson(Map<String, dynamic> json) {
+    if (json['pokemon'] != null) {
+      pokemon = new List<Pokemon>();
+      json['pokemon'].forEach((v) {
+        pokemon.add(new Pokemon.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.pokemon != null) {
+      data['pokemon'] = this.pokemon.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Pokemon {
-  Pokemon({
-    this.id,
-    this.num,
-    this.name,
-    this.img,
-    this.type,
-    this.height,
-    this.weight,
-    this.candy,
-    this.candyCount,
-    this.egg,
-    this.spawnChance,
-    this.avgSpawns,
-    this.spawnTime,
-    this.multipliers,
-    this.weaknesses,
-    this.nextEvolution,
-    this.prevEvolution,
-  });
-
   int id;
   String num;
   String name;
   String img;
-  List<Type> type;
+  List<String> type;
   String height;
   String weight;
   String candy;
-  int candyCount;
-  Egg egg;
-  double spawnChance;
-  double avgSpawns;
-  String spawnTime;
-  List<double> multipliers;
-  List<Type> weaknesses;
-  List<Evolution> nextEvolution;
-  List<Evolution> prevEvolution;
+  String egg;
+  List<NextEvolution> nextEvolution;
+  List<PrevEvolution> prevEvolution;
 
-  factory Pokemon.fromJson(Map<String, dynamic> json) => Pokemon(
-        id: json["id"],
-        num: json["num"],
-        name: json["name"],
-        img: json["img"],
-        type: List<Type>.from(json["type"].map((x) => typeValues.map[x])),
-        height: json["height"],
-        weight: json["weight"],
-        candy: json["candy"],
-        candyCount: json["candy_count"] == null ? null : json["candy_count"],
-        egg: eggValues.map[json["egg"]],
-        spawnChance: json["spawn_chance"].toDouble(),
-        avgSpawns: json["avg_spawns"].toDouble(),
-        spawnTime: json["spawn_time"],
-        multipliers: json["multipliers"] == null
-            ? null
-            : List<double>.from(json["multipliers"].map((x) => x.toDouble())),
-        weaknesses:
-            List<Type>.from(json["weaknesses"].map((x) => typeValues.map[x])),
-        nextEvolution: json["next_evolution"] == null
-            ? null
-            : List<Evolution>.from(
-                json["next_evolution"].map((x) => Evolution.fromJson(x))),
-        prevEvolution: json["prev_evolution"] == null
-            ? null
-            : List<Evolution>.from(
-                json["prev_evolution"].map((x) => Evolution.fromJson(x))),
-      );
+  Pokemon(
+      {this.id,
+      this.num,
+      this.name,
+      this.img,
+      this.type,
+      this.height,
+      this.weight,
+      this.candy,
+      this.egg,
+      this.nextEvolution,
+      this.prevEvolution});
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "num": num,
-        "name": name,
-        "img": img,
-        "type": List<dynamic>.from(type.map((x) => typeValues.reverse[x])),
-        "height": height,
-        "weight": weight,
-        "candy": candy,
-        "candy_count": candyCount == null ? null : candyCount,
-        "egg": eggValues.reverse[egg],
-        "spawn_chance": spawnChance,
-        "avg_spawns": avgSpawns,
-        "spawn_time": spawnTime,
-        "multipliers": multipliers == null
-            ? null
-            : List<dynamic>.from(multipliers.map((x) => x)),
-        "weaknesses":
-            List<dynamic>.from(weaknesses.map((x) => typeValues.reverse[x])),
-        "next_evolution": nextEvolution == null
-            ? null
-            : List<dynamic>.from(nextEvolution.map((x) => x.toJson())),
-        "prev_evolution": prevEvolution == null
-            ? null
-            : List<dynamic>.from(prevEvolution.map((x) => x.toJson())),
-      };
+  Pokemon.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    num = json['num'];
+    name = json['name'];
+    img = json['img'];
+    type = json['type'].cast<String>();
+    height = json['height'];
+    weight = json['weight'];
+    candy = json['candy'];
+    egg = json['egg'];
+    if (json['next_evolution'] != null) {
+      nextEvolution = new List<NextEvolution>();
+      json['next_evolution'].forEach((v) {
+        nextEvolution.add(new NextEvolution.fromJson(v));
+      });
+    }
+    if (json['prev_evolution'] != null) {
+      prevEvolution = new List<PrevEvolution>();
+      json['prev_evolution'].forEach((v) {
+        prevEvolution.add(new PrevEvolution.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['num'] = this.num;
+    data['name'] = this.name;
+    data['img'] = this.img;
+    data['type'] = this.type;
+    data['height'] = this.height;
+    data['weight'] = this.weight;
+    data['candy'] = this.candy;
+    data['egg'] = this.egg;
+    if (this.nextEvolution != null) {
+      data['next_evolution'] =
+          this.nextEvolution.map((v) => v.toJson()).toList();
+    }
+    if (this.prevEvolution != null) {
+      data['prev_evolution'] =
+          this.prevEvolution.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-enum Egg { THE_2_KM, NOT_IN_EGGS, THE_5_KM, THE_10_KM, OMANYTE_CANDY }
-
-final eggValues = EnumValues({
-  "Not in Eggs": Egg.NOT_IN_EGGS,
-  "Omanyte Candy": Egg.OMANYTE_CANDY,
-  "10 km": Egg.THE_10_KM,
-  "2 km": Egg.THE_2_KM,
-  "5 km": Egg.THE_5_KM
-});
-
-class Evolution {
-  Evolution({
-    this.num,
-    this.name,
-  });
-
+class NextEvolution {
   String num;
   String name;
 
-  factory Evolution.fromJson(Map<String, dynamic> json) => Evolution(
-        num: json["num"],
-        name: json["name"],
-      );
+  NextEvolution({this.num, this.name});
 
-  Map<String, dynamic> toJson() => {
-        "num": num,
-        "name": name,
-      };
+  NextEvolution.fromJson(Map<String, dynamic> json) {
+    num = json['num'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['num'] = this.num;
+    data['name'] = this.name;
+    return data;
+  }
 }
 
-enum Type {
-  FIRE,
-  ICE,
-  FLYING,
-  PSYCHIC,
-  WATER,
-  GROUND,
-  ROCK,
-  ELECTRIC,
-  GRASS,
-  FIGHTING,
-  POISON,
-  BUG,
-  FAIRY,
-  GHOST,
-  DARK,
-  STEEL,
-  DRAGON,
-  NORMAL
-}
+class PrevEvolution {
+  String num;
+  String name;
 
-final typeValues = EnumValues({
-  "Bug": Type.BUG,
-  "Dark": Type.DARK,
-  "Dragon": Type.DRAGON,
-  "Electric": Type.ELECTRIC,
-  "Fairy": Type.FAIRY,
-  "Fighting": Type.FIGHTING,
-  "Fire": Type.FIRE,
-  "Flying": Type.FLYING,
-  "Ghost": Type.GHOST,
-  "Grass": Type.GRASS,
-  "Ground": Type.GROUND,
-  "Ice": Type.ICE,
-  "Normal": Type.NORMAL,
-  "Poison": Type.POISON,
-  "Psychic": Type.PSYCHIC,
-  "Rock": Type.ROCK,
-  "Steel": Type.STEEL,
-  "Water": Type.WATER
-});
+  PrevEvolution({this.num, this.name});
 
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
+  PrevEvolution.fromJson(Map<String, dynamic> json) {
+    num = json['num'];
+    name = json['name'];
+  }
 
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['num'] = this.num;
+    data['name'] = this.name;
+    return data;
   }
 }

@@ -7,7 +7,7 @@ class AppBarHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+
     return Stack(
       overflow: Overflow.visible,
       children: [
@@ -34,7 +34,7 @@ class AppBarHome extends StatelessWidget {
           ),
         ),
         Container(
-          height: screenHeight * .2,
+          height: 120,
           child: Column(
             children: <Widget>[
               SizedBox(height: Constants.spacerExtraLarge),
