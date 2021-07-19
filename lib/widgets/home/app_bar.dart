@@ -27,6 +27,7 @@ class AppBarHome extends StatelessWidget {
                 ),
               ),
               IconButton(
+                highlightColor: Colors.red[200],
                 icon: Icon(Icons.menu),
                 onPressed: () {},
               ),

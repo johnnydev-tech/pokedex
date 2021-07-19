@@ -52,75 +52,83 @@ class PokeItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Hero(
-                  child: Opacity(
-                    child: Image.asset(
-                      Paths.pokeball,
-                      height: 80,
-                      width: 80,
-                    ),
-                    opacity: 0.2,
-                  ),
-                  tag: name + 'roatation',
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-                    child: Text(
-                      name,
-                      style: TextStyle(
-                        fontFamily: 'Google',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    // child: setTipos(),
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Hero(
-                  tag: name,
-                  child: CachedNetworkImage(
-                    alignment: Alignment.bottomRight,
-                    height: 80,
-                    width: 80,
-                    placeholder: (context, url) => new Container(
-                      color: Colors.transparent,
-                    ),
-                    imageUrl:
-                        'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$num.png',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              CustomColor.getColorType(type: types[0]).withOpacity(.75),
-              CustomColor.getColorType(type: types[0])
-            ],
-          ),
+          color: CustomColor.white,
           borderRadius: BorderRadius.all(
             Radius.circular(12.0),
+          ),
+        ),
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Hero(
+                    child: Opacity(
+                      child: Image.asset(
+                        Paths.pokeball,
+                        height: 80,
+                        width: 80,
+                      ),
+                      opacity: 0.2,
+                    ),
+                    tag: name + 'roatation',
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontFamily: 'Google',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      // child: setTipos(),
+                    ),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Hero(
+                    tag: name,
+                    child: CachedNetworkImage(
+                      alignment: Alignment.bottomRight,
+                      height: 80,
+                      width: 80,
+                      placeholder: (context, url) => new Container(
+                        color: Colors.transparent,
+                      ),
+                      imageUrl:
+                          'https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/$num.png',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                CustomColor.getColorType(type: types[0]).withOpacity(.7),
+                CustomColor.getColorType(type: types[0])
+              ],
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(12.0),
+            ),
           ),
         ),
       ),
