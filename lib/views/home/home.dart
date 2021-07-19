@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/configs/colors.dart';
-import 'package:pokedex/configs/paths.dart';
 import 'package:pokedex/widgets/home/app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,28 +10,6 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
-          Positioned(
-            top: MediaQuery.of(context).padding.top - 240 / 2.9,
-            left: screenWidth - (240 / 1.6),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Opacity(
-                  opacity: .1,
-                  child: Image.asset(
-                    Paths.pokeball,
-                    height: 240.0,
-                    width: 240.0,
-                    color: CustomColor.black,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
           Container(
             child: Column(
               children: [
