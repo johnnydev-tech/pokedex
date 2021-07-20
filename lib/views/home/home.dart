@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:pokedex/configs/paths.dart';
 import 'package:pokedex/models/pokeapi.dart';
 import 'package:pokedex/store/pokeapi/pokeapi_store.dart';
 import 'package:pokedex/widgets/home/app_bar.dart';
@@ -11,13 +14,27 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   PokeApiStore _pokemonStore;
+  AnimationController rotationController;
+
   @override
   void initState() {
     super.initState();
     _pokemonStore = PokeApiStore();
     _pokemonStore.fetchPokemonList();
+    rotationController = AnimationController(
+      duration: Duration(seconds: 5),
+      upperBound: pi * 2,
+      vsync: this,
+    );
+    rotationController.forward(from: 0.0);
+  }
+
+  @override
+  void dispose() {
+    rotationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,7 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )
                             : Center(
-                                child: CircularProgressIndicator(),
+                                child: RotationTransition(
+                                  turns: Tween(begin: 0.0, end: 1.0)
+                                      .animate(rotationController),
+                                  child: Image.asset(
+                                    Paths.pokeball,
+                                    height: 50,
+                                    color: Colors.red[300],
+                                  ),
+                                ),
                               );
                       },
                     ),
